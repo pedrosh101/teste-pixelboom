@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Noto_Serif } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,6 +12,13 @@ import { Switch } from "@/components/ui/switch";
 import { useUserStore } from "@/store/userStore";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 type ModalProps = {
   open: boolean;
@@ -18,6 +26,12 @@ type ModalProps = {
 };
 
 const notoSerif = Noto_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
@@ -62,12 +76,17 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
 
     addUser(formData);
 
-    toast("Usuário adicionado com sucesso!", {
-      action: {
-        label: "Fechar",
-        onClick: () => {},
-      },
-    });
+    toast.custom(() => (
+      <div className="bg-white px-2 py-6 w-96 rounded-md border shadow-lg flex justify-center gap-2 items-center text-base">
+        <span>Usuário adicionado com sucesso!</span>
+        <button
+          className=" bg-white ml-2 border text-black font-semibold px-3 py-1 rounded-3xl"
+          onClick={() => {}}
+        >
+          Fechar
+        </button>
+      </div>
+    ));
 
     onOpenChange(false);
 
@@ -87,33 +106,18 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
     setIsActive(true);
   };
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 bg-black/50 flex justify-end z-50">
-      <div className="bg-white h-full w-full max-w-md overflow-y-auto flex flex-col">
-        <div className="flex justify-between items-center p-4 md:p-6 border-b">
-          <h2 className={`text-lg md:text-xl font-medium font-serif ${notoSerif.className}`}>Adicionar usuário</h2>
-          <button
-            onClick={() => onOpenChange(false)}
-            className="text-gray-500 hover:text-gray-700"
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className={`fixed inset-y-0 right-0 left-auto m-0 p-0 h-full w-full max-w-md rounded-none border-0 shadow-none translate-x-0 translate-y-0 flex flex-col gap-0 overflow-hidden data-[state=open]:animate-slide-in-from-right data-[state=closed]:animate-slide-out-to-right ${inter.className}`}
+      >
+        <DialogHeader className="flex flex-row justify-between items-center p-4 md:p-6 border-b">
+          <DialogTitle
+            className={`text-lg md:text-xl font-medium font-serif ${notoSerif.className}`}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
+            Adicionar usuário
+          </DialogTitle>
+        </DialogHeader>
 
         <div className="p-4 md:p-6 space-y-4 md:space-y-6 flex-1 overflow-y-auto">
           <div className="space-y-2">
@@ -123,6 +127,7 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
               value={formData.name}
               onChange={handleChange}
               placeholder="Digite o nome"
+              className="rounded-sm"
             />
           </div>
 
@@ -133,6 +138,7 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
               value={formData.email}
               onChange={handleChange}
               placeholder="Digite o e-mail"
+              className="rounded-sm"
             />
           </div>
 
@@ -143,6 +149,7 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
               value={formData.phone}
               onChange={handleChange}
               placeholder="Informe o telefone"
+              className="rounded-sm"
             />
           </div>
 
@@ -168,6 +175,7 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
                 value={formData.cpf}
                 onChange={handleChange}
                 placeholder="Informe o CPF"
+                className="rounded-sm"
               />
             </div>
             <div className="space-y-2">
@@ -177,6 +185,7 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
                 value={formData.rg}
                 onChange={handleChange}
                 placeholder="Informe o RG"
+                className="rounded-sm"
               />
             </div>
           </div>
@@ -188,11 +197,12 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
               value={formData.email2}
               onChange={handleChange}
               placeholder="Digite o e-mail"
+              className="rounded-sm"
             />
           </div>
 
-          <Card className="border-gray-200">
-            <CardContent className="p-3 md:p-6">
+          <Card className="border-gray-200 bg-clr3 rounded-sm py-4">
+            <CardContent className="p-3 py-0">
               <div className="flex justify-between items-center">
                 <div className="flex-1">
                   <div className="font-medium">Status</div>
@@ -206,24 +216,24 @@ export default function Modal({ open, onOpenChange }: ModalProps) {
           </Card>
         </div>
 
-        <div className="border-t p-4 flex flex-col sm:flex-row justify-end gap-3">
+        <DialogFooter className=" p-4 flex flex-col sm:flex-row justify-end gap-3">
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
-            className="px-4 py-2 rounded w-full sm:w-auto"
+            className="px-4 py-2 rounded-3xl w-full sm:w-auto"
           >
             Cancelar
           </Button>
 
           <Button
             onClick={handleAdd}
-            className="bg-green-950 hover:bg-clr2 text-white px-4 py-2 rounded w-full sm:w-auto"
+            className="bg-green-950 hover:bg-clr2 text-white px-4 py-2 rounded-3xl w-full sm:w-auto"
           >
             Adicionar
           </Button>
-        </div>
+        </DialogFooter>
         <Toaster />
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

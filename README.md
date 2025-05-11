@@ -5,3 +5,5 @@
 2 - Utilizei o Zustand de forma bem simples, apenas para poder adicionar os novos usuários e exibir o toast de sucesso.
 
 3 - Mantive o e-mail duplicado no form.
+
+4 - Por conta do tempo não otimizei algumas funcionalidades, como o filtro de busca do Input Component ou a do ícone PanelLeftClose (o que prejudica bastante o uso em mobile), entre outros detalhes de responsividade.

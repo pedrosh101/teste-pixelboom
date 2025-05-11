@@ -174,7 +174,7 @@ export const useUserStore = create<UserStore>()(
         };
         
         set((state) => ({
-          users: [...state.users, newUser]
+          users: [newUser, ...state.users]
         }));
       },
       

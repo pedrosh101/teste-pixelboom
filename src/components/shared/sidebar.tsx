@@ -1,104 +1,113 @@
-import { ReactNode } from "react";
-import { BarChart2, File, HelpCircle, Settings } from "lucide-react";
+import { Inter } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
+import CollapseIcon from "@/../public/icons/CollapseIcon.svg";
+import Dashboard from "@/../public/icons/Dashboard Icon.svg";
+import Users from "@/../public/icons/Users Icon.svg";
+import Documents from "@/../public/icons/Documents Icon.svg";
+import Settings from "@/../public/icons/Settings Icon.svg";
+import Help from "@/../public/icons/Help Icon.svg";
 
-function SidebarLink({
-  href,
-  icon,
-  label,
-  active = false,
-}: {
-  href: string;
-  icon: ReactNode;
-  label: string;
-  active?: boolean;
-}) {
-  return (
-    <Link
-      href={href}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
-        active ? "bg-clr2 text-white" : "text-gray-700 hover:bg-gray-100"
-      }`}
-    >
-      {icon}
-      <span>{label}</span>
-    </Link>
-  );
-}
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
 
 export default function Sidebar() {
   return (
-    <aside className="w-72 border-r flex flex-col bg-clr1 h-screen">
+    <aside
+      className={`w-72 border-r flex flex-col bg-clr1  ${inter.className}`}
+    >
       <div className="p-4 border-b">
         <div className="bg-black text-white p-2 w-2/3 rounded-lg text-center">
           Logo
         </div>
       </div>
 
-      <div className="p-4 border-b flex justify-between items-center">
+      <div className="p-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <div className="text-sm font-medium">FA</div>
+          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+            <span className="text-gray-800 font-bold text-sm">FA</span>
+          </div>
           <div>Filial A</div>
         </div>
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </div>
+        <Image
+          src={CollapseIcon}
+          alt="Collapse"
+          width={16}
+          height={16}
+          className="mr-1"
+        />
       </div>
 
       <div className="p-4">
-        <div className="text-sm text-gray-500 mb-2">Menu</div>
+        <div className="text-sm text-gray-500 mb-4">Menu</div>
         <nav className="space-y-1">
-          <SidebarLink
+          <Link
             href="/"
-            icon={<BarChart2 size={18} />}
-            label="Dashboard"
-          />
-          <SidebarLink
+            className="flex items-center gap-2 p-3 rounded-3xl text-sm text-gray-700 hover:bg-gray-100"
+          >
+            <Image
+              src={Dashboard}
+              alt="Dashboard"
+              width={20}
+              height={20}
+              className="mr-1"
+            />
+            <span>Dashboard</span>
+          </Link>
+          <Link
             href="/"
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="8" r="5" />
-                <path d="M20 21a8 8 0 1 0-16 0" />
-              </svg>
-            }
-            label="Usuários"
-          />
-          <SidebarLink href="/" icon={<File size={18} />} label="Documentos" />
+            className="flex items-center gap-2 p-3 text-sm rounded-3xl bg-clr2 hover:bg-clr2/90 text-white"
+          >
+            <Image
+              src={Users}
+              alt="Users"
+              width={20}
+              height={20}
+              className="mr-1"
+            />
+            <span>Usuários</span>
+          </Link>
+          <Link
+            href="/"
+            className="flex items-center gap-2 p-3 rounded-3xl text-sm text-gray-700 hover:bg-gray-100"
+          >
+            <Image
+              src={Documents}
+              alt="Documents"
+              width={20}
+              height={20}
+              className="mr-1"
+            />
+            <span>Documentos</span>
+          </Link>
         </nav>
       </div>
 
-      <div className="p-4 mt-4">
-        <div className="text-sm text-gray-500 mb-2">Configurações</div>
+      <div className="p-4">
+        <div className="text-sm text-gray-500 mb-4">Configurações</div>
         <nav className="space-y-1">
-          <SidebarLink href="/" icon={<Settings size={18} />} label="Geral" />
+          <Link
+            href="/"
+            className="flex items-center gap-2 p-3 rounded-3xl text-sm text-gray-700 hover:bg-gray-100"
+          >
+            <Image
+              src={Settings}
+              alt="Settings"
+              width={20}
+              height={20}
+              className="mr-1"
+            />
+            <span>Geral</span>
+          </Link>
         </nav>
       </div>
 
       <div className="mt-auto p-4 flex items-center gap-2 text-gray-600 bg-white justify-between mx-4 rounded-2xl">
         <span>Precisa de ajuda?</span>
-        <HelpCircle size={18} />
+        <Image src={Help} alt="Help" width={20} height={20} className="mr-1" />
       </div>
     </aside>
   );

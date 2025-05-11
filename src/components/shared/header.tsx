@@ -8,7 +8,7 @@ import PanelLeftClose from "@/../public/icons/PanelLeftClose.svg";
 
 export default function Header() {
   return (
-    <div className="h-18 w-full border-b flex justify-between items-center px-6 bg-white">
+    <div className="w-full border-b flex justify-between items-center p-4 bg-white">
       <Button variant="ghost" className="p-0 rounded-full bg-none">
         <Image src={PanelLeftClose} alt="PanelLeftClose" width={20} height={20} />
       </Button>
